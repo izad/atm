@@ -1,19 +1,16 @@
 defmodule Atm.Scraper.Maybank do
-  alias Atm.Scraper.Helper
   alias Atm.{Repo, Bank, Location}
-  #alias Ecto.Multi
-
   import Ecto.Query, only: [from: 2, first: 1]
 
   def perform(type) do
+    %HTTPoison.Response{body: html} = HTTPoison.get!("http://www.maybank2u.com.my/mbb_info/m2u/public/customerService.do?programId=CS-CustService&chCatId=/mbb/Personal")
+
     bank =
       from(b in Bank, where: b.name == "Maybank")
       |> first
       |> Repo.one
 
-    HTTPoison.get!("http://www.maybank2u.com.my/mbb_info/m2u/public/customerService.do?programId=CS-CustService&chCatId=/mbb/Personal")
-    |> Helper.parse_response
-    |> parse(bank, type)
+    parse(html, bank, type)
   end
 
   def parse(html, bank, type) do
@@ -84,7 +81,7 @@ defmodule Atm.Scraper.Maybank do
     Enum.each(options, fn option ->
       [state] = Floki.attribute(option, "value")
 
-      HTTPoison.get!("http://www.maybank2u.com.my/mbb_info/m2u/public/customerServiceBranchDetailsList.do", [], params: [
+      %HTTPoison.Response{body: html} = HTTPoison.get!("http://www.maybank2u.com.my/mbb_info/m2u/public/customerServiceBranchDetailsList.do", [], params: [
         state: state,
         branch: type_to_binary(type),
         channelId: "",
@@ -92,8 +89,8 @@ defmodule Atm.Scraper.Maybank do
         programId: "CS-CustService",
         chCatId: "/mbb/Personal"
       ])
-      |> Helper.parse_response
-      |> parse(bank)
+
+      parse(html, bank)
     end)
   end
 
