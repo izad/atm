@@ -1,7 +1,7 @@
 defmodule Mix.Tasks.Scrape.Maybank do
   use Mix.Task
 
-  @shortdoc "Scrape content from cinema.com.my"
+  @shortdoc "Scrape Maybank ATM locations"
 
   def run(argv) do
     Mix.Task.run "app.start"
