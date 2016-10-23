@@ -66,7 +66,7 @@ defmodule Atm.Scraper.Maybank do
             IO.inspect location
 
           {:error, _changeset} ->
-            IO.inspect "Failed to fetch coordinate"
+            nil
         end
       end
     end)
