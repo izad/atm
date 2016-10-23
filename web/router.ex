@@ -14,13 +14,10 @@ defmodule Atm.Router do
   end
 
   scope "/", Atm do
-    pipe_through :browser # Use the default browser stack
+    pipe_through :api
 
     get "/", PageController, :index
+    resources "/banks", BankController, only: [:index, :show]
+    get "/locations/:lat/:lng", LocationController, :index
   end
-
-  # Other scopes may use custom stacks.
-  # scope "/api", Atm do
-  #   pipe_through :api
-  # end
 end

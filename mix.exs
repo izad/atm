@@ -40,7 +40,9 @@ defmodule Atm.Mixfile do
       {:gettext, "~> 0.11"},
       {:cowboy, "~> 1.0"},
       {:floki, "~> 0.11.0"},
-      {:httpoison, "~> 0.9.0"}
+      {:httpoison, "~> 0.9.0"},
+      {:geo, "~> 1.1"},
+      
     ]
   end
 
