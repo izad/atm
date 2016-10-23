@@ -18,7 +18,7 @@ defmodule Atm.LocationTest do
   end
 
   test "coordinate inserted on create" do
-    changeset = Location.insertion_changeset(%Location{}, %{name: "Ipoh", address: "Ground & Mezzanine Floor, Lot 215, Jalan Song Thian Cheok, 93100 Kuching, Sarawak"})
+    changeset = Location.changeset_without_coordinate(%Location{}, %{name: "Ipoh", address: "Ground & Mezzanine Floor, Lot 215, Jalan Song Thian Cheok, 93100 Kuching, Sarawak"})
 
     refute is_nil(changeset.changes.lat)
     refute is_nil(changeset.changes.lng)

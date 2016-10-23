@@ -59,7 +59,7 @@ defmodule Atm.Scraper.Maybank do
 
       if String.valid?(address) and is_nil(location) do
         location = Ecto.build_assoc(bank, :locations)
-        changeset = Location.insertion_changeset(location, %{name: name, address: address})
+        changeset = Location.changeset_without_coordinate(location, %{name: name, address: address})
 
         case Repo.insert(changeset) do
           {:ok, location} ->

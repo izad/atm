@@ -23,7 +23,7 @@ defmodule Atm.Location do
     |> validate_required(@required_fields)
   end
 
-  def insertion_changeset(struct, params) do
+  def changeset_without_coordinate(struct, params) do
     struct
     |> cast(params, @required_fields)
     |> put_coordinate(params)
