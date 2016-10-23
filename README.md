@@ -13,14 +13,21 @@ $ mix ecto.create
 $ mix ecto.migrate
 ```
 
-# Scrape Maybank ATM Locations
+# Scraping ATM Locations
+
+### Maybank
 
 ```
 $ mix scrape.maybank branch
 $ mix scrape.maybank offsite
 ```
 
+### CIMB Bank
+
+```
+$ mix scrape.cimb
+```
+
 # TODOs
-- Scrape CIMB ATM locations
 - Scrape Public Bank ATM locations
 - Add routes
