@@ -36,7 +36,7 @@ defmodule Atm.Location do
       address: address
     ])
 
-    response = Poison.decode!(body)    
+    response = Poison.decode!(body)
     put_coordinate(changeset, response["results"])
   end
 

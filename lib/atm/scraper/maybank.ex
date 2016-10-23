@@ -82,10 +82,16 @@ defmodule Atm.Scraper.Maybank do
 
   def iterate_states(options, bank, type) do
     Enum.each(options, fn option ->
-      [value] = Floki.attribute(option, "value")
-      url = "http://www.maybank2u.com.my/mbb_info/m2u/public/customerServiceBranchDetailsList.do?state=#{value}&branch=#{type_to_binary(type)}&channelId=&cs=1&programId=CS-CustService&chCatId=%2Fmbb%2FPersonal"
+      [state] = Floki.attribute(option, "value")
 
-      HTTPoison.get!(url)
+      HTTPoison.get!("http://www.maybank2u.com.my/mbb_info/m2u/public/customerServiceBranchDetailsList.do", [], params: [
+        state: state,
+        branch: type_to_binary(type),
+        channelId: "",
+        cs: 1,
+        programId: "CS-CustService",
+        chCatId: "/mbb/Personal"
+      ])
       |> Helper.parse_response
       |> parse(bank)
     end)
